@@ -1,5 +1,6 @@
 package org.apache.camel.learn;
 
+import org.apache.camel.learn.route.FileRoute;
 import org.apache.camel.main.Main;
 
 /**
@@ -20,7 +21,7 @@ public class MainApp {
         main.configure().addRoutesBuilder(new MyRoute22());
         */
 
-        main.configure().addRoutesBuilder(new MyBindyRoute());
+        main.configure().addRoutesBuilder(new FileRoute());
         main.run(args);
     }
 

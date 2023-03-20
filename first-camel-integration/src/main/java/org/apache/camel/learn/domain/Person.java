@@ -1,10 +1,10 @@
-package org.apache.camel.learn;
+package org.apache.camel.learn.domain;
 
 import org.apache.camel.dataformat.bindy.annotation.CsvRecord;
 import org.apache.camel.dataformat.bindy.annotation.DataField;
 
 @CsvRecord(separator = ",")
-public class Persona {
+public class Person {
     
     @DataField(pos = 1)
     private String nombres;

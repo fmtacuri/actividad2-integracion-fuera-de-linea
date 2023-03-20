@@ -1,21 +1,20 @@
-package org.apache.camel.learn;
+package org.apache.camel.learn.processor;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
+import org.apache.camel.learn.domain.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ProcesarPersona implements Processor {
+public class PersonProcessor implements Processor {
 
-    private Logger log = LoggerFactory.getLogger(ProcesarPersona.class);
+    private Logger log = LoggerFactory.getLogger(PersonProcessor.class);
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        ArrayList<Persona> list = (ArrayList) exchange.getIn().getBody();
-        for (Persona p : list){
+        ArrayList<Person> list = (ArrayList) exchange.getIn().getBody();
+        for (Person p : list){
             log.info("Persona con cedula {} cuyos nombres {}",p.getCedula(), p.getNombres());
         }
     }
