@@ -9,14 +9,17 @@ import org.slf4j.LoggerFactory;
 
 public class PersonProcessor implements Processor {
 
-    private Logger log = LoggerFactory.getLogger(PersonProcessor.class);
+  private final Logger log = LoggerFactory.getLogger(PersonProcessor.class);
 
-    @Override
-    public void process(Exchange exchange) throws Exception {
-        ArrayList<Person> list = (ArrayList) exchange.getIn().getBody();
-        for (Person p : list){
-            log.info("Persona con cedula {} cuyos nombres {}",p.getCedula(), p.getNombres());
-        }
+  @Override
+  public void process(Exchange exchange) {
+    try {
+      ArrayList<Person> list = (ArrayList) exchange.getIn().getBody();
+      for (Person p : list) {
+        log.info("Persona con cedula {} cuyos nombres {}", p.getCedula(), p.getNombres());
+      }
+    } catch (Exception exception) {
+      log.error("Error in processor: PersonProcessor, with message: {}", exception.getMessage());
     }
-    
+  }
 }
