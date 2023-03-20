@@ -1,33 +1,21 @@
 package org.apache.camel.learn;
 
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.component.jackson.JacksonDataFormat;
-import org.apache.camel.learn.domain.CrearPersonaProcess;
+import org.apache.camel.dataformat.bindy.csv.BindyCsvDataFormat;
 import org.apache.camel.learn.domain.Persona;
-import org.apache.camel.learn.domain.PersonaProcess;
+import org.apache.camel.learn.processor.ProcesarPersona;
+import org.apache.camel.spi.DataFormat;
 import org.springframework.stereotype.Component;
 
 @Component
 public class RestRouter extends RouteBuilder {
 
-  JacksonDataFormat jacksonDataFormat = new JacksonDataFormat(Persona.class);
+  DataFormat bindy = new BindyCsvDataFormat(Persona.class);
 
   @Override
   public void configure() throws Exception {
-    from("direct:personas").routeId("QPersonas").to("rest:get:/persona?host=localhost:5000")
-        .log("${body}").to("stream:out");
-
-    from("direct:persona").routeId("QPersona").to("rest:get:/persona/{codigo}?host=localhost:5000")
-        .unmarshal(jacksonDataFormat).process(new PersonaProcess()).to("log:foo");
-
-    from("direct:crearPersona").routeId("crearPersona").process(new CrearPersonaProcess())
-        .marshal(jacksonDataFormat).to("rest:post:/persona?host=localhost:5000").to("log:foo");
-
-    from("direct:crearAll").routeId("crearEnTerceros").process(new CrearPersonaProcess())
-        .marshal(jacksonDataFormat)
-        .multicast()
-        .parallelProcessing()
-        .to("rest:post:/persona?host=localhost:5000", "rest:post:/Persona?host=localhost:5011")
-        .to("log:foo");
+    from("sftp:localhost:2222/upload?noop=true&username=foo&password=pass&delete=true").to(
+            "file:src/backup/?fileName=${date:now:yyyyMMdd-HHmmss}-personas").unmarshal(bindy)
+        .process(new ProcesarPersona()).to("log:foo");
   }
 }
