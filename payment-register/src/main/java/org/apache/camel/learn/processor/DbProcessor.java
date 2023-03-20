@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.util.UUID;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.apache.camel.learn.H2Config;
+import org.apache.camel.learn.configuration.H2Config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

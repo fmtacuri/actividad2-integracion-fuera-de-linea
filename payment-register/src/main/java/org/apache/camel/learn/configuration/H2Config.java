@@ -1,4 +1,4 @@
-package org.apache.camel.learn;
+package org.apache.camel.learn.configuration;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
