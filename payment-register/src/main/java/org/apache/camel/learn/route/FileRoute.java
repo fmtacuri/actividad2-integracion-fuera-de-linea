@@ -16,8 +16,12 @@ public class FileRoute extends RouteBuilder {
     // Validar antes de guardar
     from(
         "stream:file?fileName=src/backup/cardsclients.csv&scanStream=true&scanStreamDelay=1000&retry=true&fileWatcher=true").process(
-            new FacturaProcessor()).choice().when(header("state").in("true")).process(new DbProcessor())
-        .otherwise().log(
+            new FacturaProcessor())
+        .choice()
+        .when(header("state").in("true"))
+        .process(new DbProcessor())
+        .otherwise()
+        .log(
             "No se puede guardar el id de pago: ${header.id-parameter}, porque hay valores negativos")
         .end();
   }
