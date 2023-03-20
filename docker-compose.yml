@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  sftp:
+    image: atmoz/sftp
+    volumes:
+      - D:\Descargas\upload:/home/foo/upload
+    ports:
+      - "2222:22"
+    environment:
+      - SFTP_USER=foo
+      - SFTP_PASSWORD=pass
