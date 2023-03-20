@@ -10,6 +10,13 @@ public class FacturaProcessor implements Processor {
 
   private final Logger log = LoggerFactory.getLogger(FacturaProcessor.class);
 
+  private static boolean validateState(Factura factura) {
+    return factura.getpAY1() > 0 && factura.getpAY2() > 0 && factura.getpAY3() > 0
+        && factura.getpAY4() > 0 && factura.getpAY5() > 0 && factura.getpAY6() > 0
+        && factura.getbILL1() > 0 && factura.getbILL2() > 0 && factura.getbILL3() > 0
+        && factura.getbILL4() > 0 && factura.getbILL5() > 0 && factura.getbILL6() > 0;
+  }
+
   @Override
   public void process(Exchange exchange) {
     try {
@@ -46,6 +53,7 @@ public class FacturaProcessor implements Processor {
         factura.setpAY5(Integer.parseInt(streamLine[22]));
         factura.setpAY6(Integer.parseInt(streamLine[23]));
         factura.setDefaultPaymentNextMonth(Integer.parseInt(streamLine[24]));
+        exchange.getIn().setHeader("state", validateState(factura));
       }
 
     } catch (Exception exception) {

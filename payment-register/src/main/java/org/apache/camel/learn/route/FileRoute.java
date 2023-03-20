@@ -17,7 +17,7 @@ public class FileRoute extends RouteBuilder {
     from(
         "stream:file?fileName=src/backup/cardsclients.csv&scanStream=true&scanStreamDelay=1000&retry=true&fileWatcher=true")
         .process(new FacturaProcessor())
-        .log("valor ${body}, header: ${header.id-parameter}");
+        .log("valor ${header.state}, header: ${header.id-parameter}");
   }
 
 }
