@@ -6,8 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="first-camel-integration" />
+        <module name="payment-register" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="first-camel-integration" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>
